@@ -1,0 +1,28 @@
+.container {
+    position: absolute;
+    top: 26px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.container img {
+    width: 32px;
+}
+
+@media (min-width: 750px) {
+    .container {
+        top: 52px;
+        left: 25px;
+    }
+
+    .container img {
+        width: 64px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        top: 280px;
+        left: 50px;
+    }
+}

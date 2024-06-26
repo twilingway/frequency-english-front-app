@@ -1,0 +1,48 @@
+.infoBlock {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #FB9411;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    padding: 10px;
+}
+
+.description {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    font-weight: 400;
+}
+
+@media (min-width: 750px) {
+    .infoBlock {
+        border-radius: 12px;
+        font-size: 32px;
+        line-height: 38px;
+        padding: 20px;
+    }
+
+    .description {
+        font-size: 32px;
+        line-height: 38px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .infoBlock {
+        font-size: 40px;
+        line-height: 47px;
+        padding: 24px;
+    }
+
+    .description {
+        font-size: 36px;
+        line-height: 42px;
+    }
+}

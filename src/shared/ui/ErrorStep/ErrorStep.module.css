@@ -1,0 +1,45 @@
+.errorBlock {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #150D0B;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    padding: 10px;
+    margin: 14px 0 4px;
+}
+
+.toMainButton {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #FB9411;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 9px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0;
+    margin: 4px 0 14px;
+    border: none;
+}
+
+@media (min-width: 750px) {
+    .toMainButton, .errorBlock {
+        border-radius: 12px;
+        padding: 20px;
+        font-size: 32px;
+        line-height: 38px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .toMainButton, .errorBlock {
+        padding: 24px;
+        font-size: 40px;
+        line-height: 47px;
+    }
+}
