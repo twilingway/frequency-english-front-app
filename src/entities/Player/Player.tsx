@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { useGameEngine } from '../../shared/hooks/useGameEngine';
 import { Character } from '../../shared/ui';
-import { PlayerName } from '../../widget';
+import { PlayerName } from '../../widgets';
 
 export const Player = ({ index, player }) => {
     const { phase, playerTurn, players, getCard } = useGameEngine();

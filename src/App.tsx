@@ -10,6 +10,7 @@ import './App.css';
 import { Leva } from 'leva';
 import { isHost, isStreamScreen } from 'playroomkit';
 import { Experience } from './shared/ui/Experience/Experience';
+import SceneLoader from './widgets/LoadAssetsScene/LoadAssetsScene';
 
 // initDB(DBConfig);
 
@@ -55,7 +56,8 @@ function App() {
     return (
         <>
             {/* <Leva hidden={!DEBUG || !isHost()} /> */}
-            <Canvas
+            <SceneLoader />
+            {/* <Canvas
                 id="three-canvas-container"
                 shadows
                 camera={{
@@ -63,14 +65,10 @@ function App() {
                     fov: 30,
                 }}
             >
-                <color attach="background" args={['#ececec']} />
-                {/* <Suspense fallback={null}>
-                    <Tree />
-                </Suspense> */}
-                {/* <MyStepsComponent /> */}
-                {/* <Experience /> */}
-            </Canvas>
-            <UserInterface />
+                <color attach="background" args={['#ececec']} />               
+                <Experience />
+            </Canvas> */}
+            {/* <UserInterface /> */}
             {/* <button onClick={onToggleButton}>toogle</button>
             <button onClick={onSendData}>SEND</button>
             <input type="text" value={value} onChange={handleNameChange} /> */}

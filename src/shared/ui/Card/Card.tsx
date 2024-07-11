@@ -1,5 +1,15 @@
-import { Text, useFont, useGLTF, useTexture } from '@react-three/drei';
-import React from 'react';
+import {
+    Text,
+    TransformControls,
+    useFont,
+    useGLTF,
+    useTexture,
+} from '@react-three/drei';
+import React, { useEffect, useRef, useState } from 'react';
+import { angleToRadians } from '../../utils/angle';
+import { useFrame, useThree } from '@react-three/fiber';
+
+import * as THREE from 'three';
 
 const CARD_DESCRIPTIONS = {
     // punch: 'Punch another pirate and make it drop a gem',
@@ -14,10 +24,81 @@ export function Card({ type = 'quickly', ...props }) {
     const back = useTexture(`/assets/images/shirts/shirt.png`);
     // texture.flipY = false;
 
+    const planeRef = useRef();
+    const { camera, gl, scene } = useThree();
+    const raycaster = useRef(new THREE.Raycaster());
+    const mouse = useRef(new THREE.Vector2());
+    const [isDragging, setIsDragging] = useState(false);
+    const offset = useRef(new THREE.Vector3());
+    const intersectionPlane = useRef(
+        new THREE.Plane(new THREE.Vector3(0, 0, 1), 0),
+    );
+    const planeIntersect = useRef(new THREE.Vector3());
+
+    const onPointerDown = (event) => {
+        mouse.current.set(
+            (event.clientX / window.innerWidth) * 2 - 1,
+            -(event.clientY / window.innerHeight) * 2 + 1,
+        );
+        raycaster.current.setFromCamera(mouse.current, camera);
+        const intersects = raycaster.current.intersectObject(planeRef.current);
+        if (intersects.length > 0) {
+            setIsDragging(true);
+            const intersect = intersects[0];
+            offset.current.copy(intersect.point).sub(planeRef.current.position);
+            intersectionPlane.current.setFromNormalAndCoplanarPoint(
+                camera.getWorldDirection(new THREE.Vector3()).negate(),
+                intersect.point,
+            );
+        }
+        event.stopPropagation();
+    };
+
+    const onPointerMove = (event) => {
+        mouse.current.set(
+            (event.clientX / window.innerWidth) * 2 - 1,
+            -(event.clientY / window.innerHeight) * 2 + 1,
+        );
+    };
+
+    const onPointerUp = () => {
+        setIsDragging(false);
+    };
+
+    useEffect(() => {
+        gl.domElement.addEventListener('pointermove', onPointerMove);
+        gl.domElement.addEventListener('pointerup', onPointerUp);
+        return () => {
+            gl.domElement.removeEventListener('pointermove', onPointerMove);
+            gl.domElement.removeEventListener('pointerup', onPointerUp);
+        };
+    }, [gl.domElement]);
+
+    useFrame(() => {
+        if (isDragging) {
+            raycaster.current.setFromCamera(mouse.current, camera);
+            if (
+                raycaster.current.ray.intersectPlane(
+                    intersectionPlane.current,
+                    planeIntersect.current,
+                )
+            ) {
+                planeRef.current.position.copy(
+                    planeIntersect.current.sub(offset.current),
+                );
+            }
+        }
+    });
     console.log('texture :>> ', texture);
     console.log('materials :>> ', materials);
     return (
-        <group {...props} dispose={null}>
+        <group
+            {...props}
+            dispose={null}
+            ref={planeRef}
+            position={[0, 0, 0]}
+            onPointerDown={onPointerDown}
+        >
             <mesh castShadow receiveShadow geometry={nodes.Plane.geometry}>
                 <meshStandardMaterial
                     {...materials.Front}

@@ -7,7 +7,7 @@ import { degToRad } from 'three/src/math/MathUtils.js';
 
 import { useGameEngine } from '../../shared/hooks/useGameEngine';
 import { Card, Character } from '../../shared/ui';
-import { PlayerName } from '../../widget';
+import { PlayerName } from '../../widgets';
 
 export const MobileController = () => {
     const me = myPlayer();

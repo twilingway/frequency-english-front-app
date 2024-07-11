@@ -10,6 +10,7 @@ import App from './App.tsx';
 import './index.css';
 import { GameEngineProvider } from './shared/hooks/useGameEngine.tsx';
 import { LoginPage } from './pages/LoginPage/LoginPage';
+import SceneLoader from './widgets/LoadAssetsScene/LoadAssetsScene.tsx';
 
 // add this to prompt for a refresh
 const updateSW = registerSW({
@@ -23,7 +24,7 @@ const updateSW = registerSW({
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <LoginPage />,
+        element: <SceneLoader />,
     },
     // {
     //     path: '/game',
@@ -37,9 +38,7 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
     createRoot(rootElement).render(
         <React.StrictMode>
-            {/* <div>123</div> */}
             <GameEngineProvider>
-                {/* <App /> */}
                 <RouterProvider router={router} />
             </GameEngineProvider>
         </React.StrictMode>,
