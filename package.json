@@ -1,21 +1,30 @@
 {
     "name": "frequency-english-front-app",
     "private": false,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --port 5173",
         "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
     "dependencies": {
+        "@react-three/drei": "^9.108.3",
+        "@react-three/fiber": "^8.16.8",
+        "@types/telegram-web-app": "^7.2.1",
+        "@types/three": "^0.166.0",
         "classnames": "^2.5.1",
+        "framer-motion": "^11.2.14",
+        "framer-motion-3d": "^11.2.14",
+        "leva": "^0.9.35",
+        "playroomkit": "^0.0.78",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-indexed-db-hook": "^1.0.14",
         "react-input-mask": "^2.0.4",
         "react-router-dom": "^6.21.1",
+        "three": "^0.166.1",
         "vite-plugin-svgr": "^4.2.0"
     },
     "devDependencies": {
@@ -28,6 +37,8 @@
         "eslint": "^8.55.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.5",
+        "sass": "^1.77.6",
+        "telegram-webapps": "^7.2.1",
         "typescript": "^5.2.2",
         "vite": "^5.0.8",
         "vite-plugin-pwa": "^0.17.4",

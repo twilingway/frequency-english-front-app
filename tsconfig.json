@@ -16,8 +16,10 @@
         "types": [
             "vite-plugin-svgr/client",
             "vite-plugin-pwa/client",
-            "vite/client"
+            "vite/client",
+            "./node_modules/telegram-webapps"
         ],
+
         /* Linting */
         "strict": true,
         "noUnusedLocals": true,
