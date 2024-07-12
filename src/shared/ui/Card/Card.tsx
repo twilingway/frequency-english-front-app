@@ -1,41 +1,105 @@
 import { motion } from 'framer-motion-3d';
 import React, { useRef } from 'react';
 import { Text } from '@react-three/drei';
+import { ThreeEvent, Vector3 } from '@react-three/fiber';
+import { Euler } from 'three';
+import { MotionValueVector3 } from '@react-three/drei';
+
+interface ICardProps {
+    name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    position?: any;
+
+    cardIndex: number;
+    selectedCardIndex: number | null;
+    setSelectedCardIndex: (index: number | null) => void;
+    setDragging: (isDragging: boolean) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rotation?: any;
+    setHoverCardIndex: (index: number | null) => void;
+    hoverCardIndex: number | null;
+}
 
 export function Card({
-    id,
     name,
-    position,
+    position = [0, 0, 0],
     cardIndex,
     selectedCardIndex,
     setSelectedCardIndex,
     setDragging,
-}) {
-    const objRef = useRef();
+    rotation = [0, 0, 0],
+    setHoverCardIndex,
+    hoverCardIndex,
+}: ICardProps) {
+    const objRef = useRef(null);
 
-    const onPointerDown = (event) => {
+    const onPointerDown = (event: ThreeEvent<PointerEvent>) => {
         if (event.button === 2) {
             // Right click
+
             setSelectedCardIndex(null);
             setDragging(false);
         } else {
             setSelectedCardIndex(cardIndex);
             setDragging(true);
         }
+        setHoverCardIndex(null);
         event.stopPropagation();
     };
 
+    const onHoverEnter = (event: ThreeEvent<PointerEvent>) => {
+        if (!selectedCardIndex) {
+            setHoverCardIndex(cardIndex);
+        }
+        // if (event.button === 2) {
+        //     // Right click
+        //     setSelectedCardIndex(null);
+        //     setDragging(false);
+        // } else {
+        //     setSelectedCardIndex(cardIndex);
+        //     setDragging(true);
+        // }
+        event.stopPropagation();
+    };
+    console.log('Card :>> ', hoverCardIndex === cardIndex);
+    console.log('selectedCardIndex :>> ', selectedCardIndex);
     return (
         <motion.group>
             <motion.mesh
                 ref={objRef}
-                position={position}
+                // position={position}
                 onPointerDown={onPointerDown}
+                // onPointerEnter={onHoverEnter}
+                // onPointerOver={onHoverEnter}
+                // onHoverEnd={() => setHoverCardIndex(null)}
+                onPointerMove={onHoverEnter}
+                onPointerLeave={() => setHoverCardIndex(null)}
+                // onPointerOut={() => setHoverCardIndex(null)}
                 scale={selectedCardIndex === cardIndex ? 1.2 : 1}
+                position={
+                    hoverCardIndex === cardIndex ||
+                    selectedCardIndex === cardIndex
+                        ? [0, 0, 0]
+                        : position
+                }
+                rotation={
+                    hoverCardIndex === cardIndex ||
+                    selectedCardIndex === cardIndex
+                        ? rotation
+                        : [0, 0, 0]
+                }
                 animate={{
-                    x: position[0],
-                    y: position[1],
-                    z: position[2],
+                    x: 0,
+                    y:
+                        hoverCardIndex === cardIndex ||
+                        selectedCardIndex === cardIndex
+                            ? 0.2
+                            : 0,
+                    z:
+                        hoverCardIndex === cardIndex ||
+                        selectedCardIndex === cardIndex
+                            ? 0.11
+                            : 0,
                     scale: selectedCardIndex === cardIndex ? 1.2 : 1,
                 }}
                 transition={{
@@ -44,9 +108,14 @@ export function Card({
                     damping: 10,
                 }}
             >
-                <boxGeometry args={[0.5, 0.5, 0.5]} />
+                <boxGeometry args={[0.768, 1.024, 0.02]} />
                 <meshStandardMaterial
-                    color={selectedCardIndex === cardIndex ? 'red' : 'blue'}
+                    color={
+                        selectedCardIndex === cardIndex ||
+                        hoverCardIndex === cardIndex
+                            ? 'red'
+                            : 'blue'
+                    }
                 />
             </motion.mesh>
             <Text

@@ -12,6 +12,9 @@ import { GameEngineProvider } from './shared/hooks/useGameEngine.tsx';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import SceneLoader from './widgets/LoadAssetsScene/LoadAssetsScene.tsx';
 
+import { Provider } from 'react-redux';
+import { store } from './store';
+
 // add this to prompt for a refresh
 const updateSW = registerSW({
     onNeedRefresh() {
@@ -38,9 +41,11 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
     createRoot(rootElement).render(
         <React.StrictMode>
-            <GameEngineProvider>
-                <RouterProvider router={router} />
-            </GameEngineProvider>
+            <Provider store={store}>
+                <GameEngineProvider>
+                    <RouterProvider router={router} />
+                </GameEngineProvider>
+            </Provider>
         </React.StrictMode>,
     );
 } else {

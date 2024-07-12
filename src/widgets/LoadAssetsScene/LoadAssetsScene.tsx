@@ -19,10 +19,13 @@ import {
     useTexture,
 } from '@react-three/drei';
 import { Suspense, useEffect } from 'react';
+import * as THREE from 'three';
 
-import s from './LoadAssetsScene.module.scss';
 import { Card } from '../../shared/ui';
 import { Scene } from '../Scene/Scene';
+import { angleToRadians } from '../../shared/utils/angle';
+
+import s from './LoadAssetsScene.module.scss';
 
 useGLTF.preload('/models/robot.gltf');
 function Model(props) {
@@ -97,77 +100,30 @@ const SceneLoader = () => {
                     <Model />
                 </Stage> */}
 
-                <PerspectiveCamera
-                    position={[0, 0, -4]}
-                    // rotation={[Math.PI / 2.2, 0, 0]}
+                <OrthographicCamera
+                    position={[0, 0, 0]}
+                    rotation={[angleToRadians(-10), 0, 0]}
                 >
                     <>
-                        <Scene />
+                        {console.log('Suspense :>> ')}
                         {/* <sphereGeometry />
                             <meshStandardMaterial envMap={texture} /> */}
-                        {/* <Grid args={[40, 40]} /> */}
                         {/* <Plane scale={20} rotation={[-Math.PI / 2, 0, 0]} /> */}
                         {/* <Back /> */}
-                        {/* <mesh
-                            castShadow
-                            receiveShadow
-                            geometry={nodes.Plane.geometry}
-                        > */}
-                        {/* <meshStandardMaterial
-                                // {...materials.Front}
-                                map={texture}
-                                color="white"
-                            /> */}
-                        {/* </mesh> */}
-
-                        {/* <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        />
-                        <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        />
-                        <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        />
-                        <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        />
-                        <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        />
-                        <Card
-                            scale={2}
-                            position={[0, 0, 0]}
-                            rotation={[0, 0, 0]}
-                        /> */}
-
-                        {/* <Card
-                            scale={2}
-                            position={[0, 0.1, 9]}
-                            rotation={[-Math.PI / 2, 0, 0]}
-                        /> */}
                     </>
-                </PerspectiveCamera>
+                    <Grid
+                        args={[40, 40]}
+                        rotation={[angleToRadians(90), 0, 0]}
+                        castShadow
+                        side={THREE.DoubleSide}
+                    ></Grid>
+                    <Scene />
+                </OrthographicCamera>
             </Suspense>
 
             <OrbitControls makeDefault />
             <ambientLight />
-            {/* <pointLight position={[10, 10, 10]} /> */}
-            {/* <mesh>
-                <boxBufferGeometry args={[1, 1, 1]} />
-                <meshStandardMaterial color="orange" />
-            </mesh> */}
-            {/* <Loader /> */}
+
             {/* <CameraShake
                 maxYaw={0.1} // Max amount camera can yaw in either direction
                 maxPitch={0.1} // Max amount camera can pitch in either direction
