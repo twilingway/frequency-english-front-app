@@ -1,7 +1,7 @@
 import { Environment, OrbitControls, Stats } from '@react-three/drei';
 import { MobileController } from '../../../entities';
 import { degToRad } from 'three/src/math/MathUtils.js';
-import { Card } from '../Card/Card';
+import { Card } from '../Card/Card2';
 import { isStreamScreen } from 'playroomkit';
 import { GameBoard } from '../../../entities/GameBoard/GameBoard';
 

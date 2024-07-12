@@ -160,7 +160,7 @@ const SceneLoader = () => {
                 </PerspectiveCamera>
             </Suspense>
 
-            {/* <OrbitControls makeDefault /> */}
+            <OrbitControls makeDefault />
             <ambientLight />
             {/* <pointLight position={[10, 10, 10]} /> */}
             {/* <mesh>
