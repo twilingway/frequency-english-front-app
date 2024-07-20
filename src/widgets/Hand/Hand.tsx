@@ -4,9 +4,19 @@ import { getPlayerDeck } from '../../store/selectors/getPlayerDeck/getPlayerDeck
 import { getOpponentDeck } from '../../store/selectors/getOpponentDeck/getOpponentDeck';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion-3d';
-import { ICard } from '../../store/slices/playerSlice';
+import {
+    ICard,
+    setPlayerDeck,
+    setPlayerHand,
+    setSelectedCard,
+} from '../../store/slices/playerSlice';
 import { Box } from '@react-three/drei';
 import { Card } from '../../shared/ui';
+import { useAppDispatch } from '../../shared/lib/hooks/useAppDispatch/useAppDispatch';
+import { getSelectedCard } from '../../store/selectors/getSelectedCard/getSelectedCard';
+import { getLines } from '../../store/selectors/getLines/getLines';
+import { getPlayerHand } from '../../store/selectors/getPlayerHand/getPlayerHand';
+import { getOpponentHand } from '../../store/selectors/getOpponentHand/getOpponentHand';
 
 interface IHandProps {
     playerType?: 'player' | 'opponent';
@@ -18,51 +28,63 @@ export const Hand = ({
     // setDragging,
     playerType = 'player',
 }: IHandProps) => {
-    const playerDeck = useSelector(
+    const dispatch = useAppDispatch();
+
+    const { playerLine1, playerLine2, opponentLine1, opponentLine2 } =
+        useSelector(getLines);
+
+    const deck = useSelector(
         playerType === 'player' ? getPlayerDeck : getOpponentDeck,
     );
 
-    const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(
-        null,
+    const hand = useSelector(
+        playerType === 'player' ? getPlayerHand : getOpponentHand,
     );
-    const [hoverCardIndex, setHoverCardIndex] = useState<number | null>(null);
-    const [animatingCards, setAnimatingCards] = useState<ICard[]>([]);
 
-    const handleSelectedCardIndex = (index: number | null) => {
-        setSelectedCardIndex(index);
-        console.log('SelectedCarIndex :>> ', index);
+    const selectedCard = useSelector(getSelectedCard);
+
+    // const [selectedCardIndex, setSelectedCardIndex] = useState<number | null>(
+    //     null,
+    // );
+    const [hoverCard, setHoverCard] = useState<ICard | null>(null);
+    // const [animatingCards, setAnimatingCards] = useState<ICard[]>([]);
+
+    const handleSelectedCard = (car: ICard | null) => {
+        // setSelectedCardIndex(index);
+        console.log('SelectedCar :>> ', car);
+        dispatch(setSelectedCard(car));
+        // addObjectToLine();
     };
 
-    const setDragging = (isDragging: boolean) => {
-        console.log('isDragging :>> ', isDragging);
-    };
+    // const setDragging = (isDragging: boolean) => {
+    //     console.log('isDragging :>> ', isDragging);
+    // };
 
-    const handleHoverCardIndex = (index: number | null) => {
-        setHoverCardIndex(index);
-        console.log('hoverCardIndex :>> ', index);
+    const handleHoverCard = (car: ICard | null) => {
+        setHoverCard(car);
+        // console.log('hoverCardIndex :>> ', car);
     };
 
     useEffect(() => {
-        if (playerDeck.length === 30) {
-            setAnimatingCards(playerDeck.slice(-10));
+        if (deck.length === 30) {
+            // setAnimatingCards(playerDeck.slice(-10));
+            dispatch(setPlayerHand(deck.slice(-10)));
         }
-    }, [playerDeck]);
+    }, [dispatch, deck]);
 
     const angleStep = Math.PI / 110; // Adjust the angle step as needed
     const radius = 24; // Adjust the radius as needed
 
     return (
         <>
-            {animatingCards.map((card, index) => {
-                const angle =
-                    angleStep * (index - (animatingCards.length - 1) / 2);
+            {hand.map((card, index) => {
+                const angle = angleStep * (index - (hand.length - 1) / 2);
                 const x = radius * Math.sin(angle);
                 const y = radius * (Math.cos(angle) - 1);
 
                 return (
                     <motion.group
                         key={card.id}
-                        // initial={{ x: 5, y: -3, z: 0 }}
                         initial={{ x: 5, y: -3, z: 0 }}
                         // animate={{
                         //     x: (-0.768 - 0.0) * index + 4,
@@ -78,20 +100,25 @@ export const Hand = ({
                         transition={{
                             type: 'spring',
                             stiffness: 100,
-                            damping: 10,
+                            damping: 5,
+                        }}
+                        onPointerDown={(event) => {
+                            console.log('motion.group :>> ', event);
+                        }}
+                        onClick={(event) => {
+                            console.log('motion.grouponClick :>> ', event);
                         }}
                     >
                         <Card
                             key={card.id}
-                            name={card.name}
+                            card={card}
                             rotation={[0, 0, angle]}
                             // position={[-4.5 + index, 0, 0]} // Position cards in hand
-                            cardIndex={index}
-                            selectedCardIndex={selectedCardIndex}
-                            setSelectedCardIndex={handleSelectedCardIndex}
-                            setDragging={setDragging}
-                            setHoverCardIndex={handleHoverCardIndex}
-                            hoverCardIndex={hoverCardIndex}
+                            selectedCard={selectedCard}
+                            setSelectedCard={handleSelectedCard}
+                            // setDragging={setDragging}
+                            setHoverCard={handleHoverCard}
+                            hoverCard={hoverCard}
                         />
                     </motion.group>
                 );

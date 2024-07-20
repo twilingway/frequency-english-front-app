@@ -13,7 +13,7 @@ export function Scene() {
     const [playerHand, setPlayerHand] = useState([]);
     const [opponentHand, setOpponentHand] = useState([]);
     const [selectedCardIndex, setSelectedCardIndex] = useState(null);
-    const [dragging, setDragging] = useState(false);
+    // const [dragging, setDragging] = useState(false);
     const [firstPlayer, setFirstPlayer] = useState(null);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export function Scene() {
         const handlePointerUp = (event) => {
             if (event.button === 2 || event.type === 'dblclick') {
                 setSelectedCardIndex(null);
-                setDragging(false);
+                // setDragging(false);
             }
         };
 
@@ -42,40 +42,40 @@ export function Scene() {
     //     console.log('Opponent hand updated:', opponentHand);
     // }, [playerHand, opponentHand]);
 
-    const addObjectToLine = (line, newIndex, cardIndex) => {
-        const newObj = { ...playerHand[cardIndex], position: [0, 0.25, 0] };
-        let updatedObjects;
-        if (line === 1) {
-            updatedObjects = [...line1Objects];
-            updatedObjects.splice(newIndex, 0, newObj);
-            if (updatedObjects.length > MAX_OBJECTS) return;
-            setLine1Objects(updatedObjects);
-        } else {
-            updatedObjects = [...line2Objects];
-            updatedObjects.splice(newIndex, 0, newObj);
-            if (updatedObjects.length > MAX_OBJECTS) return;
-            setLine2Objects(updatedObjects);
-        }
+    // const addObjectToLine = (line, newIndex, cardIndex) => {
+    //     const newObj = { ...playerHand[cardIndex], position: [0, 0.25, 0] };
+    //     let updatedObjects;
+    //     if (line === 1) {
+    //         updatedObjects = [...line1Objects];
+    //         updatedObjects.splice(newIndex, 0, newObj);
+    //         if (updatedObjects.length > MAX_OBJECTS) return;
+    //         setLine1Objects(updatedObjects);
+    //     } else {
+    //         updatedObjects = [...line2Objects];
+    //         updatedObjects.splice(newIndex, 0, newObj);
+    //         if (updatedObjects.length > MAX_OBJECTS) return;
+    //         setLine2Objects(updatedObjects);
+    //     }
 
-        // Удаляем карту из руки игрока
-        setPlayerHand(playerHand.filter((_, index) => index !== cardIndex));
-        setSelectedCardIndex(null);
-        setDragging(false);
+    //     // Удаляем карту из руки игрока
+    //     setPlayerHand(playerHand.filter((_, index) => index !== cardIndex));
+    //     setSelectedCardIndex(null);
+    //     setDragging(false);
 
-        // Center objects on the line
-        const totalObjects = updatedObjects.length;
-        const spacing = LINE_LENGTH / (totalObjects + 1);
-        updatedObjects.forEach((obj, index) => {
-            obj.position[0] = -LINE_LENGTH / 2 + spacing * (index + 1);
-        });
+    //     // Center objects on the line
+    //     const totalObjects = updatedObjects.length;
+    //     const spacing = LINE_LENGTH / (totalObjects + 1);
+    //     updatedObjects.forEach((obj, index) => {
+    //         obj.position[0] = -LINE_LENGTH / 2 + spacing * (index + 1);
+    //     });
 
-        // Update state to trigger re-render
-        if (line === 1) {
-            setLine1Objects([...updatedObjects]);
-        } else {
-            setLine2Objects([...updatedObjects]);
-        }
-    };
+    //     // Update state to trigger re-render
+    //     if (line === 1) {
+    //         setLine1Objects([...updatedObjects]);
+    //     } else {
+    //         setLine2Objects([...updatedObjects]);
+    //     }
+    // };
 
     // if (!firstPlayer) {
     //     return <CoinFlip setFirstPlayer={setFirstPlayer} />;
@@ -97,15 +97,15 @@ export function Scene() {
                 setSelectedCardIndex={setSelectedCardIndex}
                 setDragging={setDragging}
             /> */}
-            {/* <PlayerLine
-                position={[0, 1, 0]}
-                objects={line1Objects}
-                setObjects={setLine1Objects}
-                dragging={dragging}
-                selectedCardIndex={selectedCardIndex}
-                addObjectToLine={addObjectToLine}
-                lineId={1}
-            /> */}
+            <PlayerLine
+            // position={[0, 1, 0]}
+            // objects={line1Objects}
+            // setObjects={setLine1Objects}
+            // dragging={dragging}
+            // selectedCardIndex={selectedCardIndex}
+            // addObjectToLine={addObjectToLine}
+            // lineId={1}
+            />
             {/* <PlayerLine
                 position={[0, -1, 0]}
                 objects={line2Objects}

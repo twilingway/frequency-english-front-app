@@ -8,28 +8,38 @@ interface Card {
 }
 
 interface LineState {
-    line1Objects: Card[];
-    line2Objects: Card[];
+    playerLine1: Card[];
+    playerLine2: Card[];
+    opponentLine1: Card[];
+    opponentLine2: Card[];
 }
 
 const initialState: LineState = {
-    line1Objects: [],
-    line2Objects: [],
+    playerLine1: [],
+    playerLine2: [],
+    opponentLine1: [],
+    opponentLine2: [],
 };
 
 const lineSlice = createSlice({
     name: 'line',
     initialState,
     reducers: {
-        setLine1Objects(state, action: PayloadAction<Card[]>) {
-            state.line1Objects = action.payload;
+        setPlayerLine1(state, action: PayloadAction<Card[]>) {
+            state.playerLine1 = action.payload;
         },
-        setLine2Objects(state, action: PayloadAction<Card[]>) {
-            state.line2Objects = action.payload;
+        setPlayerLine2(state, action: PayloadAction<Card[]>) {
+            state.playerLine2 = action.payload;
+        },
+        setOpponentLine1(state, action: PayloadAction<Card[]>) {
+            state.opponentLine1 = action.payload;
+        },
+        setOpponentLine2(state, action: PayloadAction<Card[]>) {
+            state.opponentLine2 = action.payload;
         },
     },
 });
 
-export const { setLine1Objects, setLine2Objects } = lineSlice.actions;
+export const { setPlayerLine1, setPlayerLine2 } = lineSlice.actions;
 
 export default lineSlice.reducer;

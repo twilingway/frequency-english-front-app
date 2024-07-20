@@ -15,7 +15,7 @@ interface PlayerState {
     playerGraveyard: ICard[];
     opponentGraveyard: ICard[];
     firstPlayer: 'player' | 'opponent' | null;
-    selectedCardIndex: number | null;
+    selectedCard: ICard | null;
     dragging: boolean;
 }
 
@@ -27,7 +27,7 @@ const initialState: PlayerState = {
     playerGraveyard: [],
     opponentGraveyard: [],
     firstPlayer: null,
-    selectedCardIndex: null,
+    selectedCard: null,
     dragging: false,
 };
 
@@ -59,8 +59,8 @@ const playerSlice = createSlice({
         ) {
             state.firstPlayer = action.payload;
         },
-        setSelectedCardIndex(state, action: PayloadAction<number | null>) {
-            state.selectedCardIndex = action.payload;
+        setSelectedCard(state, action: PayloadAction<ICard | null>) {
+            state.selectedCard = action.payload;
         },
         setDragging(state, action: PayloadAction<boolean>) {
             state.dragging = action.payload;
@@ -72,7 +72,7 @@ export const {
     setPlayerHand,
     setOpponentHand,
     setFirstPlayer,
-    setSelectedCardIndex,
+    setSelectedCard,
     setDragging,
     setPlayerDeck,
     setOpponentDeck,

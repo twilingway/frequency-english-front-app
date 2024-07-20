@@ -1,4 +1,4 @@
-import { insertCoin } from 'playroomkit';
+// import { insertCoin } from 'playroomkit';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -16,13 +16,13 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 
 // add this to prompt for a refresh
-const updateSW = registerSW({
-    onNeedRefresh() {
-        if (confirm('New content available. Reload?')) {
-            updateSW(true);
-        }
-    },
-});
+// const updateSW = registerSW({
+//     onNeedRefresh() {
+//         if (confirm('New content available. Reload?')) {
+//             updateSW(true);
+//         }
+//     },
+// });
 
 const router = createBrowserRouter([
     {
@@ -42,9 +42,9 @@ if (rootElement) {
     createRoot(rootElement).render(
         <React.StrictMode>
             <Provider store={store}>
-                <GameEngineProvider>
-                    <RouterProvider router={router} />
-                </GameEngineProvider>
+                {/* <GameEngineProvider> */}
+                <RouterProvider router={router} />
+                {/* </GameEngineProvider> */}
             </Provider>
         </React.StrictMode>,
     );
